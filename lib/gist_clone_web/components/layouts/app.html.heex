@@ -1,38 +1,78 @@
 <header class="flex items-center justify-between py-3 px-4 sm:px-6 lg:px-8 bg-dark-400/50">
- <div class="flex items-center gap-4">
-  <.link navigate={~p"/"} class="flex items-center gap-2 text-xl font-bold text-white">
-     <img src="/images/gist-logo.svg" alt="Gist Clone" class="h-8 w-auto" />
-    Gist Clone
-  </.link>
-  <%= if @current_user do %>
-  <input type="text" placeholder="Search..." name="search" value="" class="rounded-md py-[2px] focus:outline-lavender-900" />
-  <% end %>
- </div>
- <div class="flex items-center gap-4">
+  <div class="flex items-center gap-4">
+    <.link navigate={~p"/"} class="flex items-center gap-2 text-xl font-bold text-white">
+      <img src="/images/gist-logo.svg" alt="Gist Clone" class="h-8 w-auto" /> Gist Clone
+    </.link>
     <%= if @current_user do %>
-   <.link navigate={~p"/"} class="text-base font-semibold text-white transition-colors duration-200 hover:bg-dark-400/50 px-2 py-1 rounded-md">
-    All Gists
-  </.link>
-  <div class="relative">
-  <button class="flex items-center gap" phx-click={GistCloneWeb.Layouts.App.toggle_dropdown("#dropdown-menu")}>
-  <.icon name="hero-user-circle" class="w-8 h-8 text-white"/>
-  <.icon name="hero-chevron-down" class="w-4 h-4 text-white font-bold"/>
-  </button>
-  <div class="dropdown-menu" phx-click-away={GistCloneWeb.Layouts.App.toggle_dropdown("#dropdown-menu")} hidden="true" id="dropdown-menu">
-    <.link navigate={~p"/users/settings"} class="menu-item border-b border-white/50"><%= @current_user.email %></.link>
-    <.link navigate={~p"/#"} class="menu-item">Your gists</.link>
-    <.link navigate={~p"/#"} class="menu-item">Saved gists</.link>
-    <.link navigate={~p"/#"} class="menu-item border-t border-white/50">Logout <.icon name="hero-arrow-right-start-on-rectangle" class="w-5 h-5" /> </.link>
+      <input
+        type="text"
+        placeholder="Search..."
+        name="search"
+        value=""
+        class="rounded-md py-[2px] focus:outline-lavender-900"
+      />
+    <% end %>
   </div>
-  </div> 
-  <% else %>
-  <.link navigate={~p"/users/log_in"} class="text-white">Login</.link>
-  <.link navigate={~p"/users/register"} class="text-white">Register</.link>
-  <% end %>
- </div>
+  <div class="flex items-center gap-4">
+    <%= if @current_user do %>
+      <.link navigate={~p"/"} class="menu-link">
+        All Gists
+      </.link>
+      <div class="relative">
+        <button
+          class="flex items-center gap"
+          phx-click={GistCloneWeb.Layouts.App.toggle_dropdown("#dropdown-menu")}
+        >
+          <.icon name="hero-user-circle" class="w-8 h-8 text-white" />
+          <.icon name="hero-chevron-down" class="w-4 h-4 text-white font-bold" />
+        </button>
+        <div
+          class="dropdown-menu"
+          phx-click-away={GistCloneWeb.Layouts.App.toggle_dropdown("#dropdown-menu")}
+          hidden="true"
+          id="dropdown-menu"
+        >
+          <.link navigate={~p"/users/settings"} class="menu-item border-b border-white/50">
+            {@current_user.email}
+          </.link>
+          <.link navigate={~p"/#"} class="menu-item" role="menuitem">Your gists</.link>
+          <.link navigate={~p"/#"} class="menu-item" role="menuitem">Saved gists</.link>
+          <.link
+            href={~p"/users/log_out"}
+            method="delete"
+            class="menu-item border-t border-white/50"
+            role="menuitem"
+          >
+            Logout <.icon name="hero-arrow-right-start-on-rectangle" class="w-5 h-5" />
+          </.link>
+        </div>
+      </div>
+    <% else %>
+      <.link navigate={~p"/users/log_in"} class="menu-link">Login</.link>
+      <.link navigate={~p"/users/register"} class="menu-link">Register</.link>
+    <% end %>
+  </div>
 </header>
 
 <main>
   <.flash_group flash={@flash} />
-  <%= @inner_content %>
+  {@inner_content}
 </main>
+
+<footer class="bg-dark-400/30 p-10 text-white flex items-center justify-between mt-auto">
+  <div class="flex items-center gap-4">
+    <img src="/images/gist-logo.svg" alt="Gist Clone" class="h-8 w-auto" />
+    <p>© 2025 Gist Clone</p>
+  </div>
+  <div class="space-x-4">
+    <.link navigate={~p"/"} class="text-lavender hover:text-lavender-900 hover:underline">
+      Terms
+    </.link>
+    <.link navigate={~p"/"} class="text-lavender hover:text-lavender-900 hover:underline">
+      Privacy
+    </.link>
+    <.link navigate={~p"/"} class="text-lavender hover:text-lavender-900 hover:underline">
+      About
+    </.link>
+  </div>
+</footer>

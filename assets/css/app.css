@@ -26,6 +26,10 @@
   @apply absolute right-3 -top-1 transform rotate-45 border-4 border-dark-400;
 }
 
+.menu-link {
+  @apply text-base font-semibold text-white transition-colors duration-200 hover:bg-dark-400/50 px-2 py-1 rounded-md
+}
+
 .menu-item {
   @apply text-white p-2 block transition-colors duration-300;
 }
