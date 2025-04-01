@@ -1,32 +1,38 @@
-<header class="px-4 sm:px-6 lg:px-8">
-  <div class="flex items-center justify-between border-b border-zinc-100 py-3 text-sm">
-    <div class="flex items-center gap-4">
-      <a href="/">
-        <img src={~p"/images/logo.svg"} width="36" />
-      </a>
-      <p class="bg-brand/5 text-brand rounded-full px-2 font-medium leading-6">
-        v<%= Application.spec(:phoenix, :vsn) %>
-      </p>
-    </div>
-    <div class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">
-      <a href="https://twitter.com/elixirphoenix" class="hover:text-zinc-700">
-        @elixirphoenix
-      </a>
-      <a href="https://github.com/phoenixframework/phoenix" class="hover:text-zinc-700">
-        GitHub
-      </a>
-      <a
-        href="https://hexdocs.pm/phoenix/overview.html"
-        class="rounded-lg bg-zinc-100 px-2 py-1 hover:bg-zinc-200/80"
-      >
-        Get Started <span aria-hidden="true">&rarr;</span>
-      </a>
-    </div>
+<header class="flex items-center justify-between py-3 px-4 sm:px-6 lg:px-8 bg-dark-400/50">
+ <div class="flex items-center gap-4">
+  <.link navigate={~p"/"} class="flex items-center gap-2 text-xl font-bold text-white">
+     <img src="/images/gist-logo.svg" alt="Gist Clone" class="h-8 w-auto" />
+    Gist Clone
+  </.link>
+  <%= if @current_user do %>
+  <input type="text" placeholder="Search..." name="search" value="" class="rounded-md py-[2px] focus:outline-lavender-900" />
+  <% end %>
+ </div>
+ <div class="flex items-center gap-4">
+    <%= if @current_user do %>
+   <.link navigate={~p"/"} class="text-base font-semibold text-white transition-colors duration-200 hover:bg-dark-400/50 px-2 py-1 rounded-md">
+    All Gists
+  </.link>
+  <div class="relative">
+  <button class="flex items-center gap" phx-click={GistCloneWeb.Layouts.App.toggle_dropdown("#dropdown-menu")}>
+  <.icon name="hero-user-circle" class="w-8 h-8 text-white"/>
+  <.icon name="hero-chevron-down" class="w-4 h-4 text-white font-bold"/>
+  </button>
+  <div class="dropdown-menu" phx-click-away={GistCloneWeb.Layouts.App.toggle_dropdown("#dropdown-menu")} hidden="true" id="dropdown-menu">
+    <.link navigate={~p"/users/settings"} class="menu-item border-b border-white/50"><%= @current_user.email %></.link>
+    <.link navigate={~p"/#"} class="menu-item">Your gists</.link>
+    <.link navigate={~p"/#"} class="menu-item">Saved gists</.link>
+    <.link navigate={~p"/#"} class="menu-item border-t border-white/50">Logout <.icon name="hero-arrow-right-start-on-rectangle" class="w-5 h-5" /> </.link>
   </div>
+  </div> 
+  <% else %>
+  <.link navigate={~p"/users/log_in"} class="text-white">Login</.link>
+  <.link navigate={~p"/users/register"} class="text-white">Register</.link>
+  <% end %>
+ </div>
 </header>
-<main class="px-4 py-20 sm:px-6 lg:px-8">
-  <div class="mx-auto max-w-2xl">
-    <.flash_group flash={@flash} />
-    <%= @inner_content %>
-  </div>
+
+<main>
+  <.flash_group flash={@flash} />
+  <%= @inner_content %>
 </main>
