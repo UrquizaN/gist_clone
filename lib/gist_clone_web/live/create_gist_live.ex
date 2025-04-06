@@ -27,6 +27,7 @@ defmodule GistCloneWeb.CreateGistLive do
   def handle_event("create", %{"gist" => gist_params}, socket) do
     case Gists.create_gist(socket.assigns.current_user, gist_params) do
       {:ok, _gist} ->
+        socket = push_event(socket, "clear-textarea", %{})
         form = %Gist{} |> Gists.change_gist() |> to_form()
         {:noreply, assign(socket, form: form)}
 

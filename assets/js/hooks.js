@@ -2,6 +2,8 @@ let Hooks = {}
 
 Hooks.UpdateLineNumbers = {
   mounted() {
+    const lineNumbers = document.getElementById("line-numbers")
+
     this.el.addEventListener("input", () => {
       this.updateNumbers()
     })
@@ -9,11 +11,16 @@ Hooks.UpdateLineNumbers = {
     this.updateNumbers()
 
     this.el.addEventListener("scroll", () => {
-      const lineNumbers = document.getElementById("line-numbers")
 
       if (!lineNumbers) return
 
       lineNumbers.scrollTop = this.el.scrollTop
+    })
+
+    this.handleEvent("clear-textarea", () => {
+      this.el.value = ""
+
+      lineNumbers.value = "1\n"
     })
   },
   updateNumbers() {
