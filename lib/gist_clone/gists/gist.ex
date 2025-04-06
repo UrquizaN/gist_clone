@@ -9,6 +9,7 @@ defmodule GistClone.Gists.Gist do
     field :description, :string
     field :markup_text, :string
     belongs_to :user, GistClone.Accounts.User
+    has_many :comments, GistClone.Comments.Comment
 
     timestamps(type: :utc_datetime)
   end
@@ -17,6 +18,6 @@ defmodule GistClone.Gists.Gist do
   def changeset(gist, attrs) do
     gist
     |> cast(attrs, [:name, :description, :markup_text, :user_id])
-    |> validate_required([:name, :description, :markup_text, :user_id])
+    |> validate_required([:name, :user_id])
   end
 end
