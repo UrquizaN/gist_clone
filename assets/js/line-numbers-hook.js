@@ -1,12 +1,24 @@
+export function updateNumbers(value) {
+  const lineNumbersInput = document.getElementById("line-numbers")
+
+  if (!lineNumbersInput) return
+
+  const numbers = value.split("\n").map((_, index) => index + 1 + "\n")
+
+  const parsedNumbers = numbers.join("\n")
+
+  lineNumbersInput.value = parsedNumbers
+}
+
 export default {
   mounted() {
     const lineNumbers = document.getElementById("line-numbers")
 
     this.el.addEventListener("input", () => {
-      this.updateNumbers()
+      updateNumbers(this.el.value)
     })
 
-    this.updateNumbers()
+    updateNumbers(this.el.value)
 
     this.el.addEventListener("scroll", () => {
 
@@ -32,16 +44,5 @@ export default {
 
       lineNumbers.value = "1\n"
     })
-  },
-  updateNumbers() {
-    const lineNumbersInput = document.getElementById("line-numbers")
-
-    if (!lineNumbersInput) return
-
-    const numbers = this.el.value.split("\n").map((_, index) => index + 1 + "\n")
-
-    const parsedNumbers = numbers.join("\n")
-
-    lineNumbersInput.value = parsedNumbers
   }
 }

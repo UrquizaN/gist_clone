@@ -1,7 +1,63 @@
-<div id="highlight" phx-hook="Highlight" data-language={@gist.name}>
-  <pre>
-    <code>
-    <%= @gist.markup_text %>
-    </code>
-  </pre>
+<div class="h-full bg-gradient-to-t from-dark to-lavender-900/20">
+  <div class="flex justify-between p-10">
+    <div class="flex gap-2">
+      <.icon name="hero-user-circle" class="w-8 h-8 text-white" />
+
+      <div>
+        <div class="text-white font-bold">
+          {@current_user.email} / {@gist.name}
+        </div>
+        <div class="text-white">
+          <p>{@gist.description}</p>
+          <p class="text-sm text-gray-400">{@gist.updated_at}</p>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center  text-white">
+      <.button class="block bg-lavender-900 hover:bg-lavender border border-lavender-900 p-2 rounded-l-lg">
+        <.icon name="hero-bookmark" class="w-5 h-5" /> Salvar
+      </.button>
+      <span class="py-2 px-3 rounded-r-lg border border-lavender-900">
+        0
+      </span>
+    </div>
+  </div>
+  <div class="w-2/3 mx-auto px-10">
+    <div
+      class="flex flex-col mx-auto max-w-1/2"
+      id="highlight"
+      phx-hook="Highlight"
+      data-language={@gist.name}
+    >
+      <div class="bg-dark-400/50 text-white text-sm font-bold py-2 px-4 rounded-t-lg flex justify-between items-center">
+        {@gist.name}
+        <div>
+          <.button class="bg-transparent hover:bg-dark-400 p-2 rounded-lg transition-all duration-300">
+            <.icon name="hero-pencil" class="w-5 h-5" />
+          </.button>
+          <.button class="bg-transparent hover:bg-dark-400 p-2 rounded-lg transition-all duration-300">
+            <.icon name="hero-clipboard" class="w-5 h-5" />
+          </.button>
+          <.button class="bg-transparent hover:bg-dark-400 p-2 rounded-lg transition-all duration-300">
+            <.icon name="hero-trash" class="w-5 h-5" />
+          </.button>
+        </div>
+      </div>
+      <div class="grid grid-cols-[82px_1fr] w-full border border-t-0 border-gray-500 rounded-b-lg">
+        <textarea
+          id="line-numbers"
+          class="mt-1 min-h-52 text-right outline-none focus:ring-0 rounded-lg border-none bg-transparent text-gray-400 leading-3 resize-none overflow-hidden pt-[18px]"
+          readonly
+          tabindex="-1"
+        >
+          <%= "1\n" %>
+        </textarea>
+        <pre class="contents">
+      <code class="rounded-br-lg ">
+      <%= @gist.markup_text %>
+      </code>
+    </pre>
+      </div>
+    </div>
+  </div>
 </div>
