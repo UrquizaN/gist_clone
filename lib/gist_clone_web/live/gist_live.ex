@@ -6,6 +6,13 @@ defmodule GistCloneWeb.GistLive do
   def mount(%{"id" => id}, _session, socket) do
     gist = Gists.get_gist!(id)
 
+    formatted_time =
+      gist.updated_at
+      |> Timex.Timezone.convert("America/Bahia")
+      |> Timex.format!("{0D}/{0M}/{YYYY} {0h24}:{0m}")
+
+    gist = Map.put(gist, :formatted_time, formatted_time)
+
     {:ok, assign(socket, gist: gist)}
   end
 
