@@ -8,4 +8,16 @@ defmodule GistCloneWeb.GistLive do
 
     {:ok, assign(socket, gist: gist)}
   end
+
+  def handle_event("delete", %{"id" => id}, socket) do
+    case Gists.delete_gist(socket.assigns.current_user, id) do
+      {:ok, _} ->
+        socket = put_flash(socket, :info, "Gist successfully deleted")
+        {:noreply, push_navigate(socket, to: "/create")}
+
+      {:error, error} ->
+        socket = put_flash(socket, :error, "Failed to delete gist: #{error}")
+        {:noreply, socket}
+    end
+  end
 end

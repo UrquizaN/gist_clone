@@ -5,7 +5,7 @@ defmodule GistClone.Gists do
 
   import Ecto.Query, warn: false
   alias GistClone.Repo
-
+  alias GistClone.Accounts.User
   alias GistClone.Gists.Gist
 
   @doc """
@@ -86,8 +86,14 @@ defmodule GistClone.Gists do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_gist(%Gist{} = gist) do
-    Repo.delete(gist)
+  def delete_gist(%User{} = user, gist_id) do
+    gist = get_gist!(gist_id)
+
+    if gist.user_id == user.id do
+      Repo.delete(gist)
+    else
+      {:error, :unauthorized}
+    end
   end
 
   @doc """
