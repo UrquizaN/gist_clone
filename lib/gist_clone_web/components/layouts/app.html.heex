@@ -1,4 +1,4 @@
-<header class="flex items-center justify-between py-3 px-4 sm:px-6 lg:px-8 bg-dark-400/30">
+<header class="sticky top-0 z-10 flex items-center justify-between py-4 px-4 sm:px-6 lg:px-8 bg-dark">
   <div class="flex items-center gap-4">
     <.link navigate={~p"/"} class="flex items-center gap-2 text-xl font-bold text-white">
       <img src="/images/gist-logo.svg" alt="Gist Clone" class="h-8 w-auto" /> Gist Clone
@@ -54,12 +54,12 @@
   </div>
 </header>
 
-<main>
+<main class="bg-gradient-to-t from-dark to-lavender-900/20 h-full ">
   <.flash_group flash={@flash} />
   {@inner_content}
 </main>
 
-<footer class="fixed bottom-0 left-0 right-0 bg-dark-400/30 p-10 text-white flex items-center justify-between mt-auto">
+<footer class="bg-dark border-t border-gray-700 p-10 text-white flex items-center justify-between mt-auto">
   <div class="flex items-center gap-4">
     <img src="/images/gist-logo.svg" alt="Gist Clone" class="h-8 w-auto" />
     <p>© 2025 Gist Clone</p>
