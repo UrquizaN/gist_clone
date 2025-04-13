@@ -23,7 +23,15 @@ defmodule GistCloneWeb.GistFormComponent do
     {:noreply, assign(socket, form: form)}
   end
 
-  def handle_event("create", %{"gist" => gist_params}, socket) do
+  def handle_event("submit", %{"gist" => gist_params}, socket) do
+    if socket.assigns.id do
+      handle_update(socket, Map.put(gist_params, "id", socket.assigns.id))
+    else
+      handle_create(socket, gist_params)
+    end
+  end
+
+  defp handle_create(socket, gist_params) do
     case Gists.create_gist(socket.assigns.current_user, gist_params) do
       {:ok, gist} ->
         socket = push_event(socket, "clear-textarea", %{})
@@ -38,6 +46,16 @@ defmodule GistCloneWeb.GistFormComponent do
     end
   end
 
+  defp handle_update(socket, gist_params) do
+    case Gists.update_gist(socket.assigns.current_user, gist_params) do
+      {:ok, _gist} ->
+        {:noreply, push_patch(socket, to: ~p"/gist/#{gist_params["id"]}")}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign(socket, form: to_form(changeset))}
+    end
+  end
+
   def render(assigns) do
     ~H"""
     <div>
@@ -45,7 +63,7 @@ defmodule GistCloneWeb.GistFormComponent do
         for={@form}
         class="flex flex-col gap-6"
         phx-change="validate"
-        phx-submit="create"
+        phx-submit="submit"
         phx-target={@myself}
       >
         <.input
@@ -91,9 +109,9 @@ defmodule GistCloneWeb.GistFormComponent do
 
         <.button
           class="bg-lavender-900 hover:bg-lavender w-32 self-end p-2 rounded-lg"
-          phx-disable-with="Creating..."
+          phx-disable-with={if(@id == :new_gist, do: "Creating...", else: "Updating...")}
         >
-          Create gist
+          {if(@id == :new_gist, do: "Create", else: "Update")} gist
         </.button>
       </.form>
     </div>

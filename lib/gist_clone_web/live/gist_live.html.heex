@@ -22,8 +22,16 @@
       </span>
     </div>
   </div>
-  <div class="w-2/3 mx-auto px-10">
+  <div class="w-2/3 mx-auto pb-10">
+    <.live_component
+      :if={@edit_gist}
+      module={GistCloneWeb.GistFormComponent}
+      id={@gist.id}
+      current_user={@current_user}
+      form={to_form(Gists.change_gist(@gist))}
+    />
     <div
+      :if={is_nil(@edit_gist)}
       class="flex flex-col mx-auto max-w-1/2"
       id="highlight"
       phx-hook="Highlight"
@@ -34,6 +42,8 @@
         <div>
           <.button
             :if={@gist.user_id == @current_user.id}
+            phx-click="edit"
+            phx-value-edit="true"
             class="bg-transparent hover:bg-dark-400 p-2 rounded-lg transition-all duration-300 active:scale-50"
           >
             <.icon name="hero-pencil-solid" class="w-5 h-5" />
