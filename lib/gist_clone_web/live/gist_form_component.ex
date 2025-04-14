@@ -49,7 +49,7 @@ defmodule GistCloneWeb.GistFormComponent do
   defp handle_update(socket, gist_params) do
     case Gists.update_gist(socket.assigns.current_user, gist_params) do
       {:ok, _gist} ->
-        {:noreply, push_patch(socket, to: ~p"/gist/#{gist_params["id"]}")}
+        {:noreply, push_navigate(socket, to: ~p"/gist/#{gist_params["id"]}")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, form: to_form(changeset))}

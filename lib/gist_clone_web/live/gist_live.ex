@@ -2,6 +2,7 @@ defmodule GistCloneWeb.GistLive do
   use GistCloneWeb, :live_view
 
   alias GistClone.Gists
+  alias GistCloneWeb.Utils.DateFormat
 
   def mount(%{"id" => id}, _session, socket) do
     gist = Gists.get_gist!(id)
@@ -9,29 +10,9 @@ defmodule GistCloneWeb.GistLive do
     socket =
       socket
       |> assign(edit_gist: nil)
-      |> assign_formatted_time(gist)
+      |> assign(gist: gist)
 
     {:ok, socket}
-  end
-
-  def handle_params(%{"id" => id}, _uri, socket) do
-    gist = Gists.get_gist!(id)
-
-    socket =
-      socket
-      |> assign(edit_gist: nil)
-      |> assign_formatted_time(gist)
-
-    {:noreply, socket}
-  end
-
-  defp assign_formatted_time(socket, gist) do
-    formatted_time =
-      gist.updated_at
-      |> Timex.Timezone.convert("America/Bahia")
-      |> Timex.format!("{0D}/{0M}/{YYYY} {0h24}:{0m}")
-
-    assign(socket, gist: Map.put(gist, :formatted_time, formatted_time))
   end
 
   def handle_event("delete", %{"id" => id}, socket) do
