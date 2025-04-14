@@ -9,7 +9,9 @@
         </div>
         <div class="text-white">
           <p>{@gist.description}</p>
-          <p class="text-sm text-gray-400">{@gist.formatted_time}</p>
+          <p class="text-sm text-gray-400">
+            {DateFormat.format_date(@gist.updated_at)}
+          </p>
         </div>
       </div>
     </div>
