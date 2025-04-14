@@ -17,8 +17,8 @@ defmodule GistClone.Gists do
       [%Gist{}, ...]
 
   """
-  def list_gists do
-    Repo.all(Gist)
+  def list_gists(%User{} = user) do
+    Repo.all(from g in Gist, where: g.user_id == ^user.id)
   end
 
   @doc """

@@ -1,0 +1,7 @@
+<div class="max-w-screen-lg mx-auto">
+  <h1 class="text-2xl font-bold text-white text-center pt-5">All Gists</h1>
+
+  <%= for gist <- @gists do %>
+    <.gist gist={gist} />
+  <% end %>
+</div>

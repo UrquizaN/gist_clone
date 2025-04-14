@@ -15,7 +15,7 @@
   </div>
   <div class="flex items-center gap-4">
     <%= if @current_user do %>
-      <.link navigate={~p"/"} class="menu-link">
+      <.link navigate={~p"/all"} class="menu-link">
         All Gists
       </.link>
       <div class="relative">
@@ -54,7 +54,7 @@
   </div>
 </header>
 
-<main class="bg-gradient-to-t from-dark to-lavender-900/20 h-full ">
+<main class="bg-gradient-to-t from-dark to-lavender-900/20">
   <.flash_group flash={@flash} />
   {@inner_content}
 </main>
