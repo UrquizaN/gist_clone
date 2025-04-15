@@ -3,15 +3,6 @@
     <.link navigate={~p"/"} class="flex items-center gap-2 text-xl font-bold text-white">
       <img src="/images/gist-logo.svg" alt="Gist Clone" class="h-8 w-auto" /> Gist Clone
     </.link>
-    <%= if @current_user do %>
-      <input
-        type="text"
-        placeholder="Search..."
-        name="search"
-        value=""
-        class="rounded-md py-[2px] focus:outline-lavender-900"
-      />
-    <% end %>
   </div>
   <div class="flex items-center gap-4">
     <%= if @current_user do %>
