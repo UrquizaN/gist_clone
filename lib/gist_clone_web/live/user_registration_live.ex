@@ -6,8 +6,8 @@ defmodule GistCloneWeb.UserRegistrationLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm">
-      <.header class="text-center">
+    <div class="mx-auto my-10 max-w-lg bg-dark/50 p-10 border border-lavender/30 rounded-lg">
+      <.header class="text-center text-white mb-5">
         Register for an account
         <:subtitle>
           Already registered?
@@ -26,6 +26,7 @@ defmodule GistCloneWeb.UserRegistrationLive do
         phx-trigger-action={@trigger_submit}
         action={~p"/users/log_in?_action=registered"}
         method="post"
+        class="flex flex-col gap-y-5"
       >
         <.error :if={@check_errors}>
           Oops, something went wrong! Please check the errors below.
@@ -35,7 +36,12 @@ defmodule GistCloneWeb.UserRegistrationLive do
         <.input field={@form[:password]} type="password" label="Password" required />
 
         <:actions>
-          <.button phx-disable-with="Creating account..." class="w-full">Create an account</.button>
+          <.button
+            phx-disable-with="Creating account..."
+            class="w-full bg-lavender p-2 rounded-lg hover:bg-lavender-900 transition-colors duration-300"
+          >
+            Create an account
+          </.button>
         </:actions>
       </.simple_form>
     </div>
