@@ -3,14 +3,20 @@ defmodule GistCloneWeb.AllGistsLive do
 
   alias GistClone.Gists
   alias GistClone.Repo
-  alias GistCloneWeb.Utils.DateFormat
 
   def mount(_params, _session, socket) do
-    {:ok, socket}
+    search_form = to_form(%{"search" => ""})
+    {:ok, assign(socket, search_gist: search_form)}
   end
 
   def handle_params(_params, _uri, socket) do
     gists = Gists.list_gists(socket.assigns.current_user) |> Repo.preload(:user)
+
+    {:noreply, assign(socket, gists: gists)}
+  end
+
+  def handle_event("search", %{"search" => search}, socket) do
+    gists = Gists.search_gists(socket.assigns.current_user, search) |> Repo.preload(:user)
 
     {:noreply, assign(socket, gists: gists)}
   end

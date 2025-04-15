@@ -21,6 +21,14 @@ defmodule GistClone.Gists do
     Repo.all(from g in Gist, where: g.user_id == ^user.id)
   end
 
+  def search_gists(%User{} = user, search) do
+    Repo.all(
+      from g in Gist,
+        where: g.user_id == ^user.id,
+        where: ilike(g.name, ^"%#{search}%") or ilike(g.description, ^"%#{search}%")
+    )
+  end
+
   @doc """
   Gets a single gist.
 
