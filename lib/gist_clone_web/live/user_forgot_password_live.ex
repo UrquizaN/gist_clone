@@ -5,21 +5,29 @@ defmodule GistCloneWeb.UserForgotPasswordLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm">
-      <.header class="text-center">
+    <div class="mx-auto my-20 max-w-lg bg-dark/50 p-10 border border-lavender/30 rounded-lg">
+      <.header class="text-center text-white mb-5">
         Forgot your password?
         <:subtitle>We'll send a password reset link to your inbox</:subtitle>
       </.header>
 
-      <.simple_form for={@form} id="reset_password_form" phx-submit="send_email">
+      <.simple_form
+        for={@form}
+        id="reset_password_form"
+        phx-submit="send_email"
+        class="flex flex-col gap-y-5"
+      >
         <.input field={@form[:email]} type="email" placeholder="Email" required />
         <:actions>
-          <.button phx-disable-with="Sending..." class="w-full">
+          <.button
+            phx-disable-with="Sending..."
+            class="w-full bg-lavender p-2 rounded-lg hover:bg-lavender-900 transition-colors duration-300"
+          >
             Send password reset instructions
           </.button>
         </:actions>
       </.simple_form>
-      <p class="text-center text-sm mt-4">
+      <p class="text-center text-sm mt-4 text-lavender">
         <.link href={~p"/users/register"}>Register</.link>
         | <.link href={~p"/users/log_in"}>Log in</.link>
       </p>
