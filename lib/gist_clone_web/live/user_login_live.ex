@@ -3,8 +3,8 @@ defmodule GistCloneWeb.UserLoginLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm">
-      <.header class="text-center">
+    <div class="mx-auto my-10 max-w-lg bg-dark/50 p-10 border border-lavender/30 rounded-lg">
+      <.header class="text-center text-white mb-5">
         Log in to account
         <:subtitle>
           Don't have an account?
@@ -15,18 +15,38 @@ defmodule GistCloneWeb.UserLoginLive do
         </:subtitle>
       </.header>
 
-      <.simple_form for={@form} id="login_form" action={~p"/users/log_in"} phx-update="ignore">
-        <.input field={@form[:email]} type="email" label="Email" required />
-        <.input field={@form[:password]} type="password" label="Password" required />
+      <.simple_form
+        for={@form}
+        id="login_form"
+        action={~p"/users/log_in"}
+        phx-update="ignore"
+        class="flex flex-col gap-y-5"
+      >
+        <.input field={@form[:email]} type="email" label="Email" required class="text-gray-700" />
+        <.input
+          field={@form[:password]}
+          type="password"
+          label="Password"
+          required
+          class="text-gray-700 "
+        />
 
         <:actions>
-          <.input field={@form[:remember_me]} type="checkbox" label="Keep me logged in" />
-          <.link href={~p"/users/reset_password"} class="text-sm font-semibold">
+          <.input
+            field={@form[:remember_me]}
+            type="checkbox"
+            label="Keep me logged in"
+            class="text-lavender"
+          />
+          <.link href={~p"/users/reset_password"} class="text-sm font-semibold text-lavender">
             Forgot your password?
           </.link>
         </:actions>
         <:actions>
-          <.button phx-disable-with="Logging in..." class="w-full">
+          <.button
+            phx-disable-with="Logging in..."
+            class="w-full bg-lavender p-2 rounded-lg hover:bg-lavender-900 transition-colors duration-300"
+          >
             Log in <span aria-hidden="true">→</span>
           </.button>
         </:actions>
