@@ -5,17 +5,27 @@ defmodule GistCloneWeb.UserConfirmationLive do
 
   def render(%{live_action: :edit} = assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm">
-      <.header class="text-center">Confirm Account</.header>
+    <div class="mx-auto my-20 max-w-lg bg-dark/50 p-10 border border-lavender/30 rounded-lg">
+      <.header class="text-center text-white mb-5">Confirm Account</.header>
 
-      <.simple_form for={@form} id="confirmation_form" phx-submit="confirm_account">
+      <.simple_form
+        for={@form}
+        id="confirmation_form"
+        phx-submit="confirm_account"
+        class="flex flex-col gap-y-5"
+      >
         <input type="hidden" name={@form[:token].name} value={@form[:token].value} />
         <:actions>
-          <.button phx-disable-with="Confirming..." class="w-full">Confirm my account</.button>
+          <.button
+            phx-disable-with="Confirming..."
+            class="w-full bg-lavender p-2 rounded-lg hover:bg-lavender-900 transition-colors duration-300"
+          >
+            Confirm my account
+          </.button>
         </:actions>
       </.simple_form>
 
-      <p class="text-center mt-4">
+      <p class="text-center mt-4 text-lavender">
         <.link href={~p"/users/register"}>Register</.link>
         | <.link href={~p"/users/log_in"}>Log in</.link>
       </p>
