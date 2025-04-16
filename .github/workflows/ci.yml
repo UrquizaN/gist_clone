@@ -22,7 +22,7 @@ jobs:
         elixir-version: '1.17.3'
         otp-version: '26.2.1'
     - name: Restore dependencies cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: deps
         key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
@@ -31,5 +31,23 @@ jobs:
       run: mix deps.get
     - name: Start Docker Compose services
       run: docker compose up -d
-    - name: Run tests
-      run: mix test
+  
+  testing:
+    name: Testing
+    timeout-minutes: 10
+    needs: deps
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          elixir-version: '1.17.3'
+          otp-version: '26.2.1'
+      - name: Restore dependencies cache
+        uses: actions/cache@v4
+        with:
+          path: deps
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ runner.os }}-mix-
+      - name: Run tests
+        run: mix test
