@@ -9,8 +9,8 @@ config :bcrypt_elixir, :log_rounds, 1
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
 config :gist_clone, GistClone.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "gist_db",
+  password: "gist_db",
   hostname: "localhost",
   database: "gist_clone_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
