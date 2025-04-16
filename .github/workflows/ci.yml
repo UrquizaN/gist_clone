@@ -1,9 +1,4 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-name: Elixir CI
+name: CI
 
 on:
   push:
@@ -15,11 +10,10 @@ permissions:
   contents: read
 
 jobs:
-  build:
-
-    name: Build and test
+  deps:
+    name: Install dependencies
+    timeout-minutes: 10
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
     - name: Set up Elixir
@@ -33,7 +27,8 @@ jobs:
         path: deps
         key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
         restore-keys: ${{ runner.os }}-mix-
-    - name: Install dependencies
       run: mix deps.get
+    - name: Start Docker Compose services
+      run: docker compose up -d
     - name: Run tests
       run: mix test
