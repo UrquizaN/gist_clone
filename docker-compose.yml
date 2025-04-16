@@ -1,0 +1,9 @@
+services:
+  postgres:
+    image: postgis/postgis:17-3.5-alpine
+    environment:
+      POSTGRES_DB: gist_db
+      POSTGRES_USER: gist_db
+      POSTGRES_PASSWORD: gist_db
+    ports:
+      - 5432:5432
