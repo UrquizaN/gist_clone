@@ -4,16 +4,24 @@ defmodule GistClone.CommentsFixtures do
   entities via the `GistClone.Comments` context.
   """
 
+  import GistClone.AccountsFixtures
+  import GistClone.GistsFixtures
+
   @doc """
   Generate a comment.
   """
   def comment_fixture(attrs \\ %{}) do
-    {:ok, comment} =
-      attrs
-      |> Enum.into(%{
-        markup_text: "some markup_text"
+    user = user_fixture()
+    gist = gist_fixture(user_id: user.id)
+
+    attrs =
+      Enum.into(attrs, %{
+        markup_text: "some markup_text",
+        user_id: user.id,
+        gist_id: gist.id
       })
-      |> GistClone.Comments.create_comment()
+
+    {:ok, comment} = GistClone.Comments.create_comment(user, attrs)
 
     comment
   end
