@@ -29,8 +29,6 @@ jobs:
         restore-keys: ${{ runner.os }}-mix-
     - name: Install dependencies
       run: mix deps.get
-    - name: Start Docker Compose services
-      run: docker compose up -d
   
   testing:
     name: Testing
@@ -50,5 +48,9 @@ jobs:
           path: deps
           key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
           restore-keys: ${{ runner.os }}-mix-
+      - name: Start Docker Compose services
+        run: docker compose up -d
+      - name: Compile Project
+        run: mix compile
       - name: Run tests
         run: mix test
