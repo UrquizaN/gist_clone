@@ -50,7 +50,5 @@ jobs:
           restore-keys: ${{ runner.os }}-mix-
       - name: Start Docker Compose services
         run: docker compose up -d
-      - name: Compile Project
-        run: mix compile
       - name: Run tests
         run: mix test
