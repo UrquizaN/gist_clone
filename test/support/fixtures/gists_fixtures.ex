@@ -4,18 +4,22 @@ defmodule GistClone.GistsFixtures do
   entities via the `GistClone.Gists` context.
   """
 
+  import GistClone.AccountsFixtures
+
   @doc """
   Generate a gist.
   """
   def gist_fixture(attrs \\ %{}) do
-    {:ok, gist} =
-      attrs
-      |> Enum.into(%{
+    user = attrs[:user] || user_fixture()
+
+    attrs =
+      Enum.into(attrs, %{
         description: "some description",
         markup_text: "some markup_text",
         name: "some name"
       })
-      |> GistClone.Gists.create_gist()
+
+    {:ok, gist} = GistClone.Gists.create_gist(user, attrs)
 
     gist
   end
@@ -24,10 +28,15 @@ defmodule GistClone.GistsFixtures do
   Generate a saved_gist.
   """
   def saved_gist_fixture(attrs \\ %{}) do
-    {:ok, saved_gist} =
-      attrs
-      |> Enum.into(%{})
-      |> GistClone.Gists.create_saved_gist()
+    user = attrs[:user] || user_fixture()
+    gist = attrs[:gist] || gist_fixture(user: user)
+
+    attrs =
+      Enum.into(attrs, %{
+        gist_id: gist.id
+      })
+
+    {:ok, saved_gist} = GistClone.Gists.create_saved_gist(user, attrs)
 
     saved_gist
   end
