@@ -77,7 +77,7 @@ defmodule GistClone.Gists do
 
   """
   def update_gist(%User{} = user, attrs) do
-    gist = get_gist!(attrs["id"])
+    gist = get_gist!(attrs.id)
 
     if gist.user_id == user.id do
       gist
@@ -134,8 +134,8 @@ defmodule GistClone.Gists do
       [%SavedGist{}, ...]
 
   """
-  def list_saved_gists do
-    Repo.all(SavedGist)
+  def list_saved_gists(%User{} = user) do
+    Repo.all(from s in SavedGist, where: s.user_id == ^user.id)
   end
 
   @doc """
