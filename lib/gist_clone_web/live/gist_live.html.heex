@@ -15,9 +15,16 @@
         </div>
       </div>
     </div>
-    <div class="flex items-center  text-white">
-      <.button class="flex items-center gap-1 bg-lavender-900 hover:bg-lavender border border-lavender-900 p-2 rounded-l-lg ">
-        <.icon name="hero-bookmark-solid" class="w-5 h-5" /> Salvar
+    <div :if={@gist.user_id != @current_user.id} class="flex items-center  text-white">
+      <.button
+        phx-click="save"
+        phx-value-id={@gist.id}
+        class={"flex items-center gap-1 #{if is_nil(@saved_gist), do: "hover:bg-lavender", else: "bg-lavender-900 hover:bg-transparent"} border border-lavender-900 p-2 rounded-l-lg transition-all duration-300 "}
+      >
+        <.icon
+          name={if @saved_gist, do: "hero-bookmark-solid", else: "hero-bookmark"}
+          class="w-5 h-5"
+        /> Salvar
       </.button>
       <span class="py-2 px-3 rounded-r-lg border border-lavender-900">
         0
