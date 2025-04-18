@@ -154,6 +154,11 @@ defmodule GistClone.Gists do
   """
   def get_saved_gist!(id), do: Repo.get!(SavedGist, id)
 
+  def saved_gist_by_user_id_and_gist_id(%User{} = user, gist_id) do
+    from(s in SavedGist, where: s.user_id == ^user.id and s.gist_id == ^gist_id, limit: 1)
+    |> Repo.one()
+  end
+
   @doc """
   Creates a saved_gist.
 
@@ -203,8 +208,14 @@ defmodule GistClone.Gists do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_saved_gist(%SavedGist{} = saved_gist) do
-    Repo.delete(saved_gist)
+  def delete_saved_gist(%User{} = user, gist_id) do
+    saved_gist = saved_gist_by_user_id_and_gist_id(user, gist_id)
+
+    if saved_gist do
+      Repo.delete(saved_gist)
+    else
+      {:error, :unauthorized}
+    end
   end
 
   @doc """

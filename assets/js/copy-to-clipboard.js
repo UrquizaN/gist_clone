@@ -1,6 +1,6 @@
 export default {
   mounted() {
-    this.el.addEventListener("click", e => {
+    this.el.addEventListener("click", () => {
       const text = this.el.getAttribute("data-clipboard")
 
       if (text) {

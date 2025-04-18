@@ -16,5 +16,6 @@ defmodule GistClone.Gists.SavedGist do
     saved_gist
     |> cast(attrs, [:user_id, :gist_id])
     |> validate_required([:user_id, :gist_id])
+    |> unique_constraint([:user_id, :gist_id])
   end
 end
