@@ -224,7 +224,8 @@ defmodule GistCloneWeb.CoreComponents do
   attr :type, :string, default: nil
 
   attr :class, :string,
-    default: "phx-submit-loading:opacity-75 rounded-lg bg-zinc-900 hover:bg-zinc-700 py-2 px-3"
+    default:
+      "phx-submit-loading:opacity-75 bg-lavender p-2 rounded-lg hover:bg-lavender-900 transition-colors duration-300"
 
   attr :rest, :global, include: ~w(disabled form name value)
 

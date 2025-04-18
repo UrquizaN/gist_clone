@@ -125,10 +125,19 @@ defmodule GistClone.GistsTest do
       assert saved_gist == Gists.get_saved_gist!(saved_gist.id)
     end
 
-    test "delete_saved_gist/1 deletes the saved_gist" do
-      saved_gist = saved_gist_fixture()
-      assert {:ok, %SavedGist{}} = Gists.delete_saved_gist(saved_gist)
+    test "delete_saved_gist/1 deletes the saved_gist", %{user: user} do
+      gist = gist_fixture(user: user)
+      saved_gist = saved_gist_fixture(gist: gist, user: user)
+      assert {:ok, %SavedGist{}} = Gists.delete_saved_gist(user, gist.id)
       assert_raise Ecto.NoResultsError, fn -> Gists.get_saved_gist!(saved_gist.id) end
+    end
+
+    test "delete_saved_gist/1 returns error when the user has no access to the saved_gist", %{
+      user: user
+    } do
+      gist = gist_fixture()
+      saved_gist_fixture(user: user)
+      assert {:error, :unauthorized} = Gists.delete_saved_gist(user, gist.id)
     end
 
     test "change_saved_gist/1 returns a saved_gist changeset" do
