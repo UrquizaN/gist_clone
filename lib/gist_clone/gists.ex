@@ -77,7 +77,7 @@ defmodule GistClone.Gists do
 
   """
   def update_gist(%User{} = user, attrs) do
-    gist = get_gist!(attrs.id)
+    gist = get_gist!(attrs["id"] || attrs.id)
 
     if gist.user_id == user.id do
       gist

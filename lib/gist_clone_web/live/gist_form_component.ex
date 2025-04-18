@@ -24,7 +24,7 @@ defmodule GistCloneWeb.GistFormComponent do
   end
 
   def handle_event("submit", %{"gist" => gist_params}, socket) do
-    if socket.assigns.id do
+    if socket.assigns.id != :new_gist do
       handle_update(socket, Map.put(gist_params, "id", socket.assigns.id))
     else
       handle_create(socket, gist_params)
